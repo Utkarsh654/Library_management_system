@@ -1,0 +1,28 @@
+{% extends "layout.html" %}{% block content %}
+<h1>📚 Books</h1>
+<div class="card">
+<form method="get">
+<input name="q" value="{{q}}" placeholder="Search title, author or category">
+<button>Search</button>
+</form>
+</div>
+{% if session.get('role')=='admin' %}
+<div class="card">
+<h2>Add New Book</h2>
+<form method="post" action="{{url_for('add_book')}}">
+<input name="title" placeholder="Book title" required>
+<input name="author" placeholder="Author" required>
+<input name="category" placeholder="Category">
+<input type="number" name="quantity" value="1" min="1" required>
+<button>Add Book</button>
+</form>
+</div>
+{% endif %}
+<div class="card"><div style="overflow:auto"><table>
+<tr><th>ID</th><th>Title</th><th>Author</th><th>Category</th><th>Available</th>{% if session.get('role')=='admin'%}<th>Action</th>{% endif %}</tr>
+{% for b in books %}
+<tr><td>{{b.id}}</td><td>{{b.title}}</td><td>{{b.author}}</td><td>{{b.category}}</td><td>{{b.quantity}}</td>
+{% if session.get('role')=='admin' %}<td><form method="post" action="{{url_for('delete_book',book_id=b.id)}}"><button class="danger">Delete</button></form></td>{% endif %}</tr>
+{% else %}<tr><td colspan="6">No books found.</td></tr>{% endfor %}
+</table></div></div>
+{% endblock %}

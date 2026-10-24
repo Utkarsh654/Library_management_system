@@ -1,0 +1,14 @@
+{% extends "layout.html" %}{% block content %}
+<h1>Welcome, {{session.get('name')}} 👋</h1>
+<div class="grid">
+<div class="stat"><small>Total Books</small><h2>{{total_books}}</h2></div>
+<div class="stat"><small>Book Titles</small><h2>{{total_titles}}</h2></div>
+<div class="stat"><small>Issued Books</small><h2>{{issued}}</h2></div>
+{% if session.get('role')=='admin' %}<div class="stat"><small>Users</small><h2>{{total_users}}</h2></div>
+{% else %}<div class="stat"><small>My Issued Books</small><h2>{{my_issued}}</h2></div>{% endif %}
+</div>
+<div class="card">
+<h2>Library System</h2>
+<p>Search books, issue available books, and manage your returned books from the menu.</p>
+</div>
+{% endblock %}

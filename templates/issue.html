@@ -1,0 +1,13 @@
+{% extends "layout.html" %}{% block content %}
+<div class="card">
+<h1>📖 Issue Book</h1>
+<form method="post">
+<label>Select Available Book</label>
+<select name="book_id" required>
+<option value="">-- Select Book --</option>
+{% for b in books %}<option value="{{b.id}}">{{b.title}} — {{b.author}} ({{b.quantity}} available)</option>{% endfor %}
+</select>
+<button>Issue Book</button>
+</form>
+</div>
+{% endblock %}

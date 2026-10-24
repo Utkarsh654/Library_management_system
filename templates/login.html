@@ -1,0 +1,13 @@
+{% extends "layout.html" %}{% block content %}
+<div class="card login">
+<h1 class="center">📚 Library Login</h1>
+<form method="post">
+<label>Email</label><input type="email" name="email" required>
+<label>Password</label><input type="password" name="password" required>
+<button style="width:100%">Login</button>
+</form>
+<p class="center">New user? <a href="{{ url_for('register') }}">Create account</a></p>
+<hr>
+<p class="center"><b>Admin:</b> admin@gmail.com / admin123</p>
+</div>
+{% endblock %}

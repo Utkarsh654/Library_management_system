@@ -1,0 +1,10 @@
+{% extends "layout.html" %}{% block content %}
+<h1>📕 My Books</h1>
+<div class="card"><div style="overflow:auto"><table>
+<tr><th>Book</th><th>Author</th><th>Issue Date</th><th>Return Date</th><th>Status</th><th>Action</th></tr>
+{% for r in rows %}
+<tr><td>{{r.title}}</td><td>{{r.author}}</td><td>{{r.issue_date}}</td><td>{{r.return_date or '-'}}</td><td>{{r.status}}</td>
+<td>{% if r.status=='Issued' %}<form method="post" action="{{url_for('return_book',issue_id=r.id)}}"><button class="success">Return</button></form>{% else %}-{% endif %}</td></tr>
+{% else %}<tr><td colspan="6">No issue records.</td></tr>{% endfor %}
+</table></div></div>
+{% endblock %}

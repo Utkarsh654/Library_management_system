@@ -1,0 +1,12 @@
+{% extends "layout.html" %}{% block content %}
+<div class="card login">
+<h1 class="center">📝 User Registration</h1>
+<form method="post">
+<label>Name</label><input name="name" required>
+<label>Email</label><input type="email" name="email" required>
+<label>Password</label><input type="password" name="password" minlength="4" required>
+<button style="width:100%">Register</button>
+</form>
+<p class="center">Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+</div>
+{% endblock %}

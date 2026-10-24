@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Library Management System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        /* Dark Mode */
+        body.dark {
+            background: #121212;
+            color: #ffffff;
+        }
+
+        body.dark .nav {
+            background: #1e1e1e;
+        }
+
+        body.dark .container {
+            color: #ffffff;
+        }
+
+        body.dark .card,
+        body.dark .box,
+        body.dark table {
+            background: #1e1e1e;
+            color: #ffffff;
+        }
+
+        body.dark input,
+        body.dark select,
+        body.dark textarea {
+            background: #2a2a2a;
+            color: #ffffff;
+            border-color: #555;
+        }
+
+        /* Mode Button */
+        #modeBtn {
+            border: none;
+            padding: 9px 14px;
+            margin-left: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            background: #f1f1f1;
+            color: #222;
+        }
+
+        #modeBtn:hover {
+            opacity: 0.8;
+        }
+
+        body.dark #modeBtn {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+{% if session.get('user_id') %}
+
+<div class="nav">
+
+    <div class="brand">
+        📚 Library Management
+    </div>
+
+    <div>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+        <a href="{{ url_for('books') }}">Books</a>
+
+        <a href="{{ url_for('issue_book') }}">Issue Book</a>
+
+        <a href="{{ url_for('my_books') }}">My Books</a>
+
+        {% if session.get('role') == 'admin' %}
+            <a href="{{ url_for('users') }}">Users</a>
+
+            <a href="{{ url_for('all_issues') }}">All Issues</a>
+        {% endif %}
+
+        <a href="{{ url_for('logout') }}">Logout</a>
+
+        <!-- Dark/Light Mode Button -->
+        <button id="modeBtn" onclick="changeMode()">
+            🌙 Dark Mode
+        </button>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<div class="container">
+
+    {% with messages=get_flashed_messages(with_categories=true) %}
+
+        {% for category, message in messages %}
+
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+
+</div>
+
+
+<script>
+    // Page load hote hi saved mode check karo
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const savedMode = localStorage.getItem("theme");
+        const button = document.getElementById("modeBtn");
+
+        if (savedMode === "dark") {
+            document.body.classList.add("dark");
+
+            if (button) {
+                button.innerHTML = "☀️ Light Mode";
+            }
+        }
+    });
+
+
+    // Dark / Light Mode change
+    function changeMode() {
+
+        document.body.classList.toggle("dark");
+
+        const button = document.getElementById("modeBtn");
+
+        if (document.body.classList.contains("dark")) {
+
+            // Dark mode save
+            localStorage.setItem("theme", "dark");
+
+            if (button) {
+                button.innerHTML = "☀️ Light Mode";
+            }
+
+        } else {
+
+            // Light mode save
+            localStorage.setItem("theme", "light");
+
+            if (button) {
+                button.innerHTML = "🌙 Dark Mode";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
